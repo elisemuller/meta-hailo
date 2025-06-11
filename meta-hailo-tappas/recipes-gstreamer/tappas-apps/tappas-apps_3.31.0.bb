@@ -43,7 +43,8 @@ python () {
     else:
         d.setVar('REQS_FILE', d.getVar('REQS_HAILO15_FILE'))
         d.setVar('ARM_APPS_DIR', d.getVar('HAILO15_DIR'))
-        d.appendVar('DEPENDS', " libmedialib-api xtensor")
+        # d.appendVar('DEPENDS', " libmedialib-api xtensor")
+        d.appendVar('DEPENDS', " xtensor")
 }
 
 IS_H15 = "${@ 'true' if 'hailo15' in d.getVar('MACHINE') else 'false'}"
