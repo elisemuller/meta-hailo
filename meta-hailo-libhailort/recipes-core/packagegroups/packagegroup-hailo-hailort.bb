@@ -6,22 +6,17 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 inherit packagegroup
 
 PACKAGEGROUP_DISABLE_COMPLEMENTARY = "1"
-PACKAGES_BY_FEATURES = "\
-    ${@bb.utils.contains('DISTRO_FEATURES', 'hrt-gen-ai', '${PN}-gen-ai', '', d)} \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'hrt-server', '${PN}-pci-server', '', d)} \
-    "
-PACKAGES = "${PN} \
-            ${PACKAGES_BY_FEATURES} \
-            "
+PACKAGES = "packagegroup-hailo-hailort"
 
 RDEPENDS:${PN} = "\
     hailortcli \
-    libhailort \
-    ${PACKAGES_BY_FEATURES} \
-    "
+    libhailort"
 
-PCI_SERVER_PACKAGES = ""
-RDEPENDS:${PN}-pci-server = "${PCI_SERVER_PACKAGES}"
+RDEPENDS:append:${PN}:hailo10-m2 = "\
+    hailo-pci-ep \
+    hailort-server"
 
-GEN_AI_PACKAGES = "pyhailort"
-RDEPENDS:${PN}-gen-ai = "${GEN_AI_PACKAGES}"
+RDEPENDS:append:${PN}:hailo10-m2-devel = "\
+    pyhailort \
+    python3 \
+    python3-numpy"
